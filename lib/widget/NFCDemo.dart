@@ -28,7 +28,7 @@ class NFCState extends State<NFCDemo> {
         ),
         Text("${_nfcData.status}"),
         Text("${_nfcData.id}"),
-        Text("${_nfcData.content}")
+        Text("${_nfcData.content}"),
       ],
     );
   }
