@@ -1,3 +1,4 @@
+import 'package:docsearch/widget/AppointmentList.dart';
 import 'package:docsearch/widget/Search.dart';
 import 'package:flutter/material.dart';
 
@@ -30,16 +31,21 @@ class HomePage extends StatelessWidget {
             height: 1,
           ),
           ListTile(
-              leading: Icon(
-                Icons.check_box,
-                size: 40,
-              ),
-              title: Text("Appointment"),
-              subtitle: Text("View and manage the reserved services"),
-              trailing: Icon(
-                Icons.keyboard_arrow_right,
-                size: 40,
-              )),
+            leading: Icon(
+              Icons.check_box,
+              size: 40,
+            ),
+            title: Text("Appointment"),
+            subtitle: Text("View and manage the reserved services"),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              size: 40,
+            ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AppointmentList()));
+            },
+          ),
           Divider(
             height: 1,
           ),

@@ -32,7 +32,7 @@ class ProfilePageState extends State<ProfilePage> {
                           CircleAvatar(
                             radius: 40,
                             backgroundImage: NetworkImage(
-                                "https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg"),
+                                "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 10, bottom: 10),
@@ -43,7 +43,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 5),
                                   child: Text(
-                                    "Dr. Tralala",
+                                    "Dr. Chan Tai Man",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -54,14 +54,14 @@ class ProfilePageState extends State<ProfilePage> {
                                   width:
                                       MediaQuery.of(context).size.width - 110,
                                   child: Text(
-                                    "MBBS, MD - Pediatrics, Fellowship in Neonatology",
+                                    "BDS, MDS - Oral Medicine and Radiology",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                Text("Mental",
+                                Text("Dentist",
                                     style: TextStyle(
                                       color: Colors.white,
                                     ))

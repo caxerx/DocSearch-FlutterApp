@@ -1,3 +1,5 @@
+import 'package:docsearch/widget/ClinicAppointmentDetails.dart';
+import 'package:docsearch/widget/OnlineAppointmentDetails.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentList extends StatelessWidget {
@@ -24,15 +26,53 @@ class AppointmentList extends StatelessWidget {
               Column(
                 children: <Widget>[
                   ListTile(
-                    leading: CircleAvatar(),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ClinicAppointmentDetails()));
+                    },
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
+                    ),
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Dr. Avatar"),
-                        Text("ABC Clinic")
+                        Text("Dr. Chan Tai Man"),
+                        Text("Tak Po Clinic")
                       ],
                     ),
                     subtitle: Text("28 Jan 2019, 11:00 PM"),
+                  )
+                ],
+              ),
+              Divider(
+                height: 1,
+              ),
+              Column(
+                children: <Widget>[
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  OnlineAppointmentDetails()));
+                    },
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("Dr. John Doe"),
+                        Text("Online Consultation")
+                      ],
+                    ),
+                    subtitle: Text("30 Jan 2019, 3:00 PM"),
                   )
                 ],
               ),

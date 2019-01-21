@@ -65,23 +65,27 @@ class SearchResultPageState extends State<SearchResultPage> {
                           CircleAvatar(
                             radius: 35,
                             backgroundImage: NetworkImage(
-                                "https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg"),
+                                "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
                           ),
                           Container(
+                              width: MediaQuery.of(context).size.width-118,
                               padding: EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Dr. Avatar",
+                                    "Dr. Chan Tai Man",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
                                   ),
-                                  Text("Gynecologist/Obstetrician"),
-                                  Text("MBBS, MS - Obstetrics & Gynaecology"),
-                                  Text("10 years experience"),
-                                  Text("Shatin"),
+                                  Text("Dentist"),
+                                  Text(
+                                    "BDS, MDS - Oral Medicine and Radiology",
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text("13 years experience"),
+                                  Text("Central District"),
                                 ],
                               ))
                         ],

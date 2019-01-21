@@ -1,3 +1,4 @@
+import 'package:docsearch/widget/AppointmentConfirmationPage.dart';
 import 'package:docsearch/widget/AppointmentList.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,10 @@ class AppointmentDetailsPage extends StatelessWidget {
                   ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          "https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg"),
+                          "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
                     ),
-                    title: Text("Dr. Suneela Nayak"),
-                    subtitle: Text("Pediatrician"),
+                    title: Text("Dr. Chan Tai Man"),
+                    subtitle: Text("Dentist"),
                   ),
                   Divider(
                     height: 1,
@@ -89,8 +90,13 @@ class AppointmentDetailsPage extends StatelessWidget {
             child: RaisedButton(
               child: Text("Done"),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AppointmentList()));
+                while (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AppointmentConfirmationPage()));
               },
               color: Colors.blue,
               textColor: Colors.white,

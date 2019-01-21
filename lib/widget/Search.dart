@@ -10,18 +10,10 @@ class SearchPage extends StatefulWidget {
 
 class SearchPageState extends State<SearchPage> {
   var searchHistory = <String>[
-    "Mental",
-    "Heart",
-    "Dr. Tsang",
-    "Mentalf23",
-    "Hear2gt",
-    "Dr. Tg24sang",
-    "Mentq35hbal",
-    "Hear4atnt",
-    "Dr. Trsang",
-    "Mentalq54",
-    "Ha4rtbfceart",
-    "Dr. Tsa4er5twhbrang"
+    "Transgender",
+    "Dentist",
+    "Ear-nose-throat",
+    "Chan Tai Man",
   ];
 
   @override
