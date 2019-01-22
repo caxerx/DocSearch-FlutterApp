@@ -14,7 +14,7 @@ class OnlineAppointmentDetails extends StatelessWidget {
               backgroundImage: NetworkImage(
                   "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
             ),
-            title: Text("Dr. Chan Tai Man"),
+            title: Text("Dr. John Doe"),
             subtitle: Text("Dentist"),
           ),
           Divider(

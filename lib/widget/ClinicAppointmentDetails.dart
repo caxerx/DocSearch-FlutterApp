@@ -229,7 +229,9 @@ class ClinicAppointmentDetails extends StatelessWidget {
                         GestureDetector(
                           child: Padding(
                             padding: EdgeInsets.all(2),
-                            child: Icon(Icons.close),
+                            child: GestureDetector(
+                                child: Icon(Icons.close),
+                                onTap: () => Navigator.pop(context)),
                           ),
                         )
                       ],
