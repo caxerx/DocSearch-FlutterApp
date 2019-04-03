@@ -1,10 +1,16 @@
 import 'package:docsearch/widget/AppointmentList.dart';
 import 'package:docsearch/widget/Search.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomePage extends StatelessWidget {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   @override
   Widget build(BuildContext context) {
+    _firebaseMessaging.requestNotificationPermissions();
+    _firebaseMessaging.configure();
+    _firebaseMessaging.getToken().then((t) => print(t));
     return Scaffold(
       appBar: AppBar(
         title: Text("DocSearch"),
@@ -70,6 +76,20 @@ class HomePage extends StatelessWidget {
               ),
               title: Text("Feedback"),
               subtitle: Text("Share opinions to the development team."),
+              trailing: Icon(
+                Icons.keyboard_arrow_right,
+                size: 40,
+              )),
+          Divider(
+            height: 1,
+          ),
+          ListTile(
+              leading: Icon(
+                Icons.feedback,
+                size: 40,
+              ),
+              title: Text("GQL Test"),
+              subtitle: Text("TEST>_<"),
               trailing: Icon(
                 Icons.keyboard_arrow_right,
                 size: 40,

@@ -261,9 +261,8 @@ class NfcDialogState extends State<NfcDialog> {
   NfcData _nfcData = NfcData();
   String _nfcText = "Check-in failed, please retry.";
 
-  Future<void> startNFC(context) async {
-    NfcData response;
 
+  Future<void> startNFC() async {
     setState(() {
       _nfcData = NfcData();
       _nfcData.status = NFCStatus.reading;
@@ -271,15 +270,13 @@ class NfcDialogState extends State<NfcDialog> {
 
     print('NFC: Scan started');
 
-    try {
-      print('NFC: Scan readed NFC tag');
-      response = await FlutterNfcReader.read;
-    } on PlatformException {
-      print('NFC: Scan stopped exception');
-    }
-    setState(() {
-      _nfcData = response;
+    print('NFC: Scan readed NFC tag');
+    FlutterNfcReader.read.listen((response) {
+      setState(() {
+        _nfcData = response;
+      });
     });
+
     if (_nfcData.id == "0xd34556e2") {
       setState(() {
         _nfcText = "Check-in success.";
@@ -311,12 +308,12 @@ class NfcDialogState extends State<NfcDialog> {
   }
 
   void retry() {
-    startNFC(context);
+    startNFC();
   }
 
   @override
   void initState() {
-    startNFC(context);
+    startNFC();
   }
 
   @override
