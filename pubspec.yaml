@@ -23,9 +23,9 @@ dependencies:
     git:
       url: git://github.com/matteocrippa/flutter-nfc-reader.git
       ref: master
-  qr_flutter: ^1.1.6
-  uuid: ^1.0.3
-  graphql_flutter: ^0.9.5
+  qr_flutter: ^2.0.0+51
+  uuid: ^2.0.0
+  graphql_flutter: ^1.0.0-beta.1+1
   firebase_messaging: ^4.0.0+1
 dev_dependencies:
   flutter_test:
