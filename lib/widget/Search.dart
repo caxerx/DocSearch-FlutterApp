@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:docsearch/widget/SearchResult.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -9,15 +12,49 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  var searchHistory = <String>[
-    "Transgender",
-    "Dentist",
-    "Ear-nose-throat",
-    "Chan Tai Man",
-  ];
+  var _searchHistory = <String>[];
+  var _keyword = new TextEditingController();
+
+  void _getSearchHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var searchHistory = prefs.getStringList("searchHistory");
+    if (searchHistory != null) {
+      setState(() {
+        _searchHistory = searchHistory;
+      });
+    }
+  }
+
+  void _addSearchHistory(keyword) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (_searchHistory.contains(keyword)) {
+      _searchHistory.remove(keyword);
+    }
+    print(keyword);
+    setState(() {
+      _searchHistory.insert(0, keyword);
+    });
+    prefs.setStringList("searchHistory", _searchHistory);
+  }
+
+  void _clearSearchHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _searchHistory.clear();
+    });
+    prefs.setStringList("searchHistory", _searchHistory);
+  }
+
+  _search(keyword) async {
+    _addSearchHistory(keyword);
+    _keyword.text = "";
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SearchResultPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
+    _getSearchHistory();
     return Scaffold(
         body: CustomScrollView(slivers: <Widget>[
       SliverAppBar(
@@ -30,6 +67,8 @@ class SearchPageState extends State<SearchPage> {
             child: Padding(
               padding: EdgeInsets.all(8),
               child: TextField(
+                onSubmitted: _search,
+                controller: _keyword,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -62,11 +101,7 @@ class SearchPageState extends State<SearchPage> {
                 padding: EdgeInsets.only(right: 4),
                 child: FlatButton(
                   child: Text("CLEAR"),
-                  onPressed: () {
-                    setState(() {
-                      searchHistory.clear();
-                    });
-                  },
+                  onPressed: _clearSearchHistory,
                 ),
               )
             ],
@@ -81,17 +116,14 @@ class SearchPageState extends State<SearchPage> {
                 height: 1,
               ),
               ListTile(
-                title: Text(searchHistory[index]),
+                title: Text(_searchHistory[index]),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchResultPage()));
+                  _search(_searchHistory[index]);
                 },
               ),
             ],
           );
-        }, childCount: searchHistory.length),
+        }, childCount: _searchHistory.length),
       )
     ]));
   }

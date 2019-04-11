@@ -1,4 +1,5 @@
 import 'package:docsearch/widget/AppointmentList.dart';
+import 'package:docsearch/widget/GraphQLTest.dart';
 import 'package:docsearch/widget/Search.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -93,7 +94,12 @@ class HomePage extends StatelessWidget {
               trailing: Icon(
                 Icons.keyboard_arrow_right,
                 size: 40,
-              ))
+              ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => GraphQLTest()));
+            },
+          )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
