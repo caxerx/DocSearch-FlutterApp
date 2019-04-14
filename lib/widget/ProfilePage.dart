@@ -11,7 +11,6 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    var rootCtx = context;
     return Scaffold(
         body: Column(
       children: <Widget>[
@@ -255,53 +254,7 @@ class ProfilePageState extends State<ProfilePage> {
               showModalBottomSheet<void>(
                   context: context,
                   builder: (BuildContext context) {
-                    return Container(
-                      height: 200,
-                      child: Column(
-                        children: <Widget>[
-                          AppBar(
-                            title: Text("Select Appointment Type"),
-                            actions: <Widget>[
-                              IconButton(
-                                icon: Icon(Icons.close),
-                                onPressed: () =>
-                                    Navigator.of(context).pop(null),
-                              ),
-                            ],
-                            automaticallyImplyLeading: false,
-                          ),
-                          Expanded(
-                            child: ListView(
-                              children: <Widget>[
-                                ListTile(
-                                  title: Text("Clinic Consultation"),
-                                  subtitle: Text("Meet doctor in clinic."),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AppointmentTimeSelectionPage()));
-                                  },
-                                ),
-                                ListTile(
-                                  title: Text("Online Consultation"),
-                                  subtitle: Text(
-                                      "Meet doctor through online consultation."),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AppointmentTimeSelectionPage()));
-                                  },
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    return getConsultationTypeSelector();
                   });
             },
           ),
@@ -309,4 +262,55 @@ class ProfilePageState extends State<ProfilePage> {
       ],
     ));
   }
+
+  Widget getConsultationTypeSelector(){
+    return Container(
+      height: 200,
+      child: Column(
+        children: <Widget>[
+          AppBar(
+            title: Text("Select Appointment Type"),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () =>
+                    Navigator.of(context).pop(null),
+              ),
+            ],
+            automaticallyImplyLeading: false,
+          ),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                ListTile(
+                  title: Text("Clinic Consultation"),
+                  subtitle: Text("Meet doctor in clinic."),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AppointmentTimeSelectionPage()));
+                  },
+                ),
+                ListTile(
+                  title: Text("Online Consultation"),
+                  subtitle: Text(
+                      "Meet doctor through online consultation."),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AppointmentTimeSelectionPage()));
+                  },
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
 }

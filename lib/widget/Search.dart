@@ -14,6 +14,15 @@ class SearchPage extends StatefulWidget {
 class SearchPageState extends State<SearchPage> {
   var _searchHistory = <String>[];
   var _keyword = new TextEditingController();
+  var _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 100),(){
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
+  }
 
   void _getSearchHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,7 +39,6 @@ class SearchPageState extends State<SearchPage> {
     if (_searchHistory.contains(keyword)) {
       _searchHistory.remove(keyword);
     }
-    print(keyword);
     setState(() {
       _searchHistory.insert(0, keyword);
     });
@@ -48,9 +56,12 @@ class SearchPageState extends State<SearchPage> {
   _search(keyword) async {
     _addSearchHistory(keyword);
     _keyword.text = "";
+    Navigator.pop(context);
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SearchResultPage()));
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +78,7 @@ class SearchPageState extends State<SearchPage> {
             child: Padding(
               padding: EdgeInsets.all(8),
               child: TextField(
+                focusNode: _focusNode,
                 onSubmitted: _search,
                 controller: _keyword,
                 decoration: InputDecoration(

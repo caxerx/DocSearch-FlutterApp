@@ -1,4 +1,5 @@
 import 'package:docsearch/widget/ProfilePage.dart';
+import 'package:docsearch/widget/SearchFilterPage.dart';
 import 'package:flutter/material.dart';
 
 class SearchResultPage extends StatefulWidget {
@@ -27,24 +28,20 @@ class SearchResultPageState extends State<SearchResultPage> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Chip(label: Text("Available")),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Chip(label: Text("Online Booking")),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Chip(label: Text("District")),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Chip(
-                        label: Text(
-                          "Add Filters",
-                          style: TextStyle(color: Colors.white),
+                      child: GestureDetector(
+                        child: Chip(
+                          label: Text(
+                            "Add Filters",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.grey,
                         ),
-                        backgroundColor: Colors.grey,
+                        onTap: () {
+                          Navigator.of(context).push(PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) =>
+                                  SearchFilterPage()));
+                        },
                       ),
                     )
                   ],
@@ -68,7 +65,7 @@ class SearchResultPageState extends State<SearchResultPage> {
                                 "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
                           ),
                           Container(
-                              width: MediaQuery.of(context).size.width-118,
+                              width: MediaQuery.of(context).size.width - 118,
                               padding: EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -29,6 +29,8 @@ dependencies:
   firebase_messaging: ^4.0.0+1
   scoped_model: ^1.0.1
   shared_preferences: ^0.5.2
+  intl: ^0.15.8
+  expandable: ^2.1.0+3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,3 +77,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+  fonts:
+  - family: Google Sans
+    fonts:
+    - asset: fonts/GoogleSans-Regular.ttf
+    - asset: fonts/GoogleSans-Bold.ttf
+    - asset: fonts/GoogleSans-BoldItalic.ttf
+    - asset: fonts/GoogleSans-Italic.ttf
+    - asset: fonts/GoogleSans-Medium.ttf
+    - asset: fonts/GoogleSans-MediumItalic.ttf
+  assets:
+  - assets/docsearch_logo.png

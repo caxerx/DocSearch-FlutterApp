@@ -19,6 +19,7 @@ class DocSearchApp extends StatelessWidget {
           // is not restarted.
           primaryColor: Colors.blue,
           primarySwatch: Colors.blue,
+          fontFamily: 'Google Sans'
         ),
         home: HomePage()
         /*

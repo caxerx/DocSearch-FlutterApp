@@ -1,3 +1,4 @@
+import 'package:docsearch/widget/VideoConsultationPage.dart';
 import 'package:flutter/material.dart';
 
 class OnlineAppointmentDetails extends StatelessWidget {
@@ -55,7 +56,9 @@ class OnlineAppointmentDetails extends StatelessWidget {
                 padding: EdgeInsets.only(left: 72, top: 5, bottom: 5),
                 child: GestureDetector(
                   child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (ctx)=>VideoConsultationPage()));
+                      },
                       child: Padding(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: Text(
