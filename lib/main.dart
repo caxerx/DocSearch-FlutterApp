@@ -1,7 +1,8 @@
+import 'package:docsearch/model/SearchModel.dart';
 import 'package:docsearch/widget/DocSearchApp.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-
+import 'package:scoped_model/scoped_model.dart';
 
 void main() {
   final Link link = HttpLink(
@@ -15,5 +16,11 @@ void main() {
     ),
   );
 
-  runApp(DocSearchApp());
+  runApp(ScopedModel<SearchModel>(
+    model: SearchModel(),
+    child: GraphQLProvider(
+      client: client,
+      child: DocSearchApp(),
+    ),
+  ));
 }

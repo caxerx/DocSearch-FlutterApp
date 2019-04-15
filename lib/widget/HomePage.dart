@@ -2,6 +2,8 @@ import 'package:docsearch/widget/AppointmentList.dart';
 import 'package:docsearch/widget/LoginPage.dart';
 import 'package:docsearch/widget/MedicalRecordListPage.dart';
 import 'package:docsearch/widget/Search.dart';
+import 'package:docsearch/widget/components/ListHeader.dart';
+import 'package:docsearch/widget/components/MedicalInfoTile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -91,74 +93,37 @@ class HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        Container(
-          padding: EdgeInsets.all(15),
-          color: Colors.black12,
-          child: Row(
-            children: <Widget>[
-              Text(
-                "Medical News",
-                style: TextStyle(color: Colors.black87),
-              )
-            ],
-          ),
-        ),
+        ListHeader("Medical News"),
         Expanded(
-          child: ListView(
-            children: <Widget>[
-              GestureDetector(
-                child: InkWell(
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Image.asset(
-                            "assets/docsearch_logo.png",
-                            width: 128,
-                            height: 96,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Title TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle Title",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title ",
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: true,
-                                  maxLines: 3,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                Text(
-                                  "21/12/2019 - News Forward",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color:Colors.grey),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Divider(height: 1,)
-            ],
+            child: ListView(children: <Widget>[
+          MedicalInfoTile(
+              "https://filedrop.1lo.li/s2.png",
+              "Proper Breathing Brings Better Health",
+              "Strees reduction, insomnia prevention, emotional control, improved attention - certain breathiung techniques can make life better.",
+              "Jan 15, 2019",
+              "Christophe Andre"),
+          Divider(
+            height: 1,
           ),
-        )
+          MedicalInfoTile(
+              "https://filedrop.1lo.li/s1.png",
+              "Pesticides on Our plates: Is Our Food Safe to Eat?",
+              "A new report looks at the amount of pesticides that are making their way to our plates",
+              "Jan 19, 2019",
+              "Nutrition Diva Monica Reinagel"),
+          Divider(
+            height: 1,
+          ),
+          MedicalInfoTile(
+              "https://filedrop.1lo.li/s3.png",
+              "A New Idea about What Trigger Alzheimer's ",
+              "Changes in brain celles' DNA may be reponsible - and if so, medicines already devveloped for other diseasess might be used to treat it.",
+              "Jan 9, 2019",
+              "Jerold Chun"),
+          Divider(
+            height: 1,
+          ),
+        ])),
       ],
     );
   }
@@ -238,8 +203,10 @@ class HomePageState extends State<HomePage> {
           title: Text("Medical Records"),
           subtitle: Text("View the medical records"),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MedicalRecordListPage()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MedicalRecordListPage()));
           },
         ),
         Divider(

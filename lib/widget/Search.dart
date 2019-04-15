@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:docsearch/model/SearchModel.dart';
 import 'package:docsearch/widget/SearchResult.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
@@ -15,14 +17,17 @@ class SearchPageState extends State<SearchPage> {
   var _searchHistory = <String>[];
   var _keyword = new TextEditingController();
   var _focusNode = FocusNode();
+  var model;
 
   @override
   void initState() {
     super.initState();
+    model = ScopedModel.of<SearchModel>(context);
     Future.delayed(Duration(milliseconds: 100),(){
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }
+
 
   void _getSearchHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -54,6 +59,7 @@ class SearchPageState extends State<SearchPage> {
   }
 
   _search(keyword) async {
+    model.keyword = keyword;
     _addSearchHistory(keyword);
     _keyword.text = "";
     Navigator.pop(context);

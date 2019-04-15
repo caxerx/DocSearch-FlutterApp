@@ -31,6 +31,7 @@ dependencies:
   shared_preferences: ^0.5.2
   intl: ^0.15.8
   expandable: ^2.1.0+3
+  recase: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

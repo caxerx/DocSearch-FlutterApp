@@ -1,3 +1,4 @@
+import 'package:docsearch/widget/RegistrationPage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,7 +11,7 @@ class LoginPage extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Padding(padding: EdgeInsets.only(top: 50)),
-          Image.asset("assets/docsearch_logo.png",height: 200),
+          Image.asset("assets/docsearch_logo.png", height: 150),
           Text(
             "DocSearch",
             textAlign: TextAlign.center,
@@ -59,12 +60,10 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: 50,
-                    right: 50
-                  ),
+                  padding: EdgeInsets.only(left: 50, right: 50),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(minWidth: double.infinity),
+                    constraints:
+                        const BoxConstraints(minWidth: double.infinity),
                     child: RaisedButton(
                       child: Text("Login"),
                       textColor: Colors.white,
@@ -75,17 +74,21 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegistrationPage()));
+                  },
                   child: Text(
                     "Sign up for an account",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue
-                    ),
+                        fontWeight: FontWeight.bold, color: Colors.blue),
                   ),
                 )
               ],
