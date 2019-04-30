@@ -1,5 +1,6 @@
-import 'package:docsearch/model/SearchModel.dart';
-import 'package:docsearch/widget/DocSearchApp.dart';
+import 'package:doc_search/model/GlobalModel.dart';
+import 'package:doc_search/widget/DocSearchApp.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -16,8 +17,18 @@ void main() {
     ),
   );
 
-  runApp(ScopedModel<SearchModel>(
-    model: SearchModel(),
+  var model = GlobalModel();
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  _firebaseMessaging.requestNotificationPermissions();
+  _firebaseMessaging.configure();
+
+  model.fcm = _firebaseMessaging;
+
+  _firebaseMessaging.getToken().then((t) => model.token = t);
+
+  runApp(ScopedModel<GlobalModel>(
+    model: model,
     child: GraphQLProvider(
       client: client,
       child: DocSearchApp(),

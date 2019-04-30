@@ -1,4 +1,4 @@
-import 'package:docsearch/widget/MedicalRecordDetailsPage.dart';
+import 'package:doc_search/widget/MedicalRecordDetailsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

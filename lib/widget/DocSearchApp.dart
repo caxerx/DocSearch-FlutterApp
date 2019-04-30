@@ -1,4 +1,4 @@
-import 'package:docsearch/widget/HomePage.dart';
+import 'package:doc_search/widget/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class DocSearchApp extends StatelessWidget {

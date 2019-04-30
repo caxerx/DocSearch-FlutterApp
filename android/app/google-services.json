@@ -8,19 +8,23 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:227642580718:android:d12eb8d9745f67fe",
+        "mobilesdk_app_id": "1:227642580718:android:f5c7968ee6ca0da7",
         "android_client_info": {
-          "package_name": "li.a1lo.docsearch.docsearch"
+          "package_name": "li.a1lo.docsearch.doc_search"
         }
       },
       "oauth_client": [
         {
-          "client_id": "227642580718-f9gstamnia3t8l1us535tgnf9ig5vf54.apps.googleusercontent.com",
+          "client_id": "227642580718-1vgh2a4svv60104aoaoujhgv53030ot0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "li.a1lo.docsearch.docsearch",
+            "package_name": "li.a1lo.docsearch.doc_search",
             "certificate_hash": "5314074b61ebfc29d65dd53490ab5d47a04d1b93"
           }
+        },
+        {
+          "client_id": "227642580718-729nrorfheiag7qo8bvd7t3buumeemi6.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [

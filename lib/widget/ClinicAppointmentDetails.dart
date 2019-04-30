@@ -5,6 +5,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 
 class ClinicAppointmentDetails extends StatelessWidget {
+  String id;
+  ClinicAppointmentDetails(this.id);
+
   var uuid = new Uuid();
 
   @override

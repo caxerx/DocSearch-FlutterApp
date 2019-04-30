@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:docsearch/model/SearchModel.dart';
-import 'package:docsearch/widget/SearchResult.dart';
+import 'package:doc_search/model/GlobalModel.dart';
+import 'package:doc_search/widget/SearchResult.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,8 +22,8 @@ class SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    model = ScopedModel.of<SearchModel>(context);
-    Future.delayed(Duration(milliseconds: 100),(){
+    model = ScopedModel.of<GlobalModel>(context);
+    Future.delayed(Duration(milliseconds: 100), () {
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }
@@ -40,6 +40,9 @@ class SearchPageState extends State<SearchPage> {
   }
 
   void _addSearchHistory(keyword) async {
+    if (keyword == "") {
+      return;
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (_searchHistory.contains(keyword)) {
       _searchHistory.remove(keyword);
@@ -68,81 +71,80 @@ class SearchPageState extends State<SearchPage> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     _getSearchHistory();
     return Scaffold(
         body: CustomScrollView(slivers: <Widget>[
-      SliverAppBar(
-        expandedHeight: 125,
-        pinned: true,
-        title: Text("Search a Doctor"),
-        flexibleSpace: FlexibleSpaceBar(
-          background: Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: TextField(
-                focusNode: _focusNode,
-                onSubmitted: _search,
-                controller: _keyword,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: Icon(Icons.search)),
+          SliverAppBar(
+            expandedHeight: 125,
+            pinned: true,
+            title: Text("Search a Doctor"),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: TextField(
+                    focusNode: _focusNode,
+                    onSubmitted: _search,
+                    controller: _keyword,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.search)),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      SliverList(
-          delegate: SliverChildListDelegate(<Widget>[
-        Container(
-          padding: EdgeInsets.only(
-            left: 15,
-          ),
-          color: Colors.black12,
-          child: Row(
-            children: <Widget>[
-              Text(
-                "Search History",
-                style: TextStyle(color: Colors.grey),
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.only(right: 4),
-                child: FlatButton(
-                  child: Text("CLEAR"),
-                  onPressed: _clearSearchHistory,
-                ),
-              )
-            ],
-          ),
-        )
-      ])),
-      SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          return Column(
-            children: <Widget>[
-              Divider(
-                height: 1,
-              ),
-              ListTile(
-                title: Text(_searchHistory[index]),
-                onTap: () {
-                  _search(_searchHistory[index]);
-                },
-              ),
-            ],
-          );
-        }, childCount: _searchHistory.length),
-      )
-    ]));
+          SliverList(
+              delegate: SliverChildListDelegate(<Widget>[
+                Container(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                  ),
+                  color: Colors.black12,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Search History",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: EdgeInsets.only(right: 4),
+                        child: FlatButton(
+                          child: Text("CLEAR"),
+                          onPressed: _clearSearchHistory,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ])),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Column(
+                children: <Widget>[
+                  Divider(
+                    height: 1,
+                  ),
+                  ListTile(
+                    title: Text(_searchHistory[index]),
+                    onTap: () {
+                      _search(_searchHistory[index]);
+                    },
+                  ),
+                ],
+              );
+            }, childCount: _searchHistory.length),
+          )
+        ]));
   }
 }

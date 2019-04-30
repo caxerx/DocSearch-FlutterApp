@@ -1,7 +1,8 @@
-import 'package:docsearch/widget/VideoConsultationPage.dart';
+import 'package:doc_search/widget/VideoConsultationPage.dart';
 import 'package:flutter/material.dart';
 
 class OnlineAppointmentDetails extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,4 +100,7 @@ class OnlineAppointmentDetails extends StatelessWidget {
       ),
     );
   }
+
+  String id;
+  OnlineAppointmentDetails(this.id);
 }

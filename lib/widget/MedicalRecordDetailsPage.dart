@@ -1,4 +1,4 @@
-import 'package:docsearch/widget/components/ListHeader.dart';
+import 'package:doc_search/widget/components/ListHeader.dart';
 import 'package:flutter/material.dart';
 
 class MedicalRecordDetailsPage extends StatelessWidget {

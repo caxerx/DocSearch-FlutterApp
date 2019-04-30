@@ -1,20 +1,18 @@
-import 'package:docsearch/widget/AppointmentList.dart';
-import 'package:docsearch/widget/LoginPage.dart';
-import 'package:docsearch/widget/MedicalRecordListPage.dart';
-import 'package:docsearch/widget/Search.dart';
-import 'package:docsearch/widget/components/ListHeader.dart';
-import 'package:docsearch/widget/components/MedicalInfoTile.dart';
+import 'package:doc_search/model/GlobalModel.dart';
+import 'package:doc_search/widget/AppointmentList.dart';
+import 'package:doc_search/widget/LoginPage.dart';
+import 'package:doc_search/widget/MedicalRecordListPage.dart';
+import 'package:doc_search/widget/Search.dart';
+import 'package:doc_search/widget/components/ListHeader.dart';
+import 'package:doc_search/widget/components/MedicalInfoTile.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatefulWidget {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
   @override
   State<StatefulWidget> createState() {
-    _firebaseMessaging.requestNotificationPermissions();
-    _firebaseMessaging.configure();
-    _firebaseMessaging.getToken().then((t) => print(t));
     return HomePageState();
   }
 }
@@ -22,10 +20,12 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int _page = 0;
   FocusNode focusNode = FocusNode();
+  GlobalModel model;
 
   @override
   void initState() {
     super.initState();
+    model = ScopedModel.of<GlobalModel>(context);
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         Navigator.push(
@@ -53,12 +53,13 @@ class HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (i) {
-          setState(() {
-            _page = i;
-          });
-          if (i == 1) {
+          if (i == 1 && model.loggedInUserId == "-1") {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => LoginPage()));
+          } else {
+            setState(() {
+              _page = i;
+            });
           }
         },
         currentIndex: _page,
@@ -96,131 +97,186 @@ class HomePageState extends State<HomePage> {
         ListHeader("Medical News"),
         Expanded(
             child: ListView(children: <Widget>[
-          MedicalInfoTile(
-              "https://filedrop.1lo.li/s2.png",
-              "Proper Breathing Brings Better Health",
-              "Strees reduction, insomnia prevention, emotional control, improved attention - certain breathiung techniques can make life better.",
-              "Jan 15, 2019",
-              "Christophe Andre"),
-          Divider(
-            height: 1,
-          ),
-          MedicalInfoTile(
-              "https://filedrop.1lo.li/s1.png",
-              "Pesticides on Our plates: Is Our Food Safe to Eat?",
-              "A new report looks at the amount of pesticides that are making their way to our plates",
-              "Jan 19, 2019",
-              "Nutrition Diva Monica Reinagel"),
-          Divider(
-            height: 1,
-          ),
-          MedicalInfoTile(
-              "https://filedrop.1lo.li/s3.png",
-              "A New Idea about What Trigger Alzheimer's ",
-              "Changes in brain celles' DNA may be reponsible - and if so, medicines already devveloped for other diseasess might be used to treat it.",
-              "Jan 9, 2019",
-              "Jerold Chun"),
-          Divider(
-            height: 1,
-          ),
-        ])),
+              MedicalInfoTile(
+                  "https://filedrop.1lo.li/s2.png",
+                  "Proper Breathing Brings Better Health",
+                  "Strees reduction, insomnia prevention, emotional control, improved attention - certain breathiung techniques can make life better.",
+                  "Jan 15, 2019",
+                  "Christophe Andre"),
+              Divider(
+                height: 1,
+              ),
+              MedicalInfoTile(
+                  "https://filedrop.1lo.li/s1.png",
+                  "Pesticides on Our plates: Is Our Food Safe to Eat?",
+                  "A new report looks at the amount of pesticides that are making their way to our plates",
+                  "Jan 19, 2019",
+                  "Nutrition Diva Monica Reinagel"),
+              Divider(
+                height: 1,
+              ),
+              MedicalInfoTile(
+                  "https://filedrop.1lo.li/s3.png",
+                  "A New Idea about What Trigger Alzheimer's ",
+                  "Changes in brain celles' DNA may be reponsible - and if so, medicines already devveloped for other diseasess might be used to treat it.",
+                  "Jan 9, 2019",
+                  "Jerold Chun"),
+              Divider(
+                height: 1,
+              ),
+            ])),
       ],
     );
   }
 
   Widget getProfilePage() {
-    return ListView(
-      children: <Widget>[
-        GestureDetector(
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: CircleAvatar(
-                      minRadius: 40,
-                      maxRadius: 40,
-                      backgroundImage: NetworkImage(
-                          "http://demo.solwininfotech.com/wordpress/veriyas-pro/wp-content/uploads/2016/05/John-Doe.jpg"),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
+    var qd = """
+query(\$id: ID!){
+  patient(id: \$id){
+    avatar
+    name
+    username
+  }
+}
+    """;
+    return Query(
+      options: QueryOptions(
+          document: qd, variables: {"id": model.loggedInUserId}),
+      builder: (res) {
+        return ModalProgressHUD(
+          inAsyncCall: res.loading,
+          child: Builder(builder: (ctx){
+            if(res.loading) return Container();
+            return ListView(
+              children: <Widget>[
+                GestureDetector(
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
                       padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text(
-                            "Caxer Tsang",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                            child: CircleAvatar(
+                              maxRadius: 40,
+                              minRadius: 40,
+                              backgroundImage: (res.data["patient"]["avatar"] ==
+                                  null ||
+                                  res.data["patient"]["avatar"] == "")
+                                  ? AssetImage(
+                                  "assets/noavatar.png")
+                                  : NetworkImage(
+                                  "https://dsapi.1lo.li/assets/avatars/" +
+                                      res.data["patient"]["avatar"]),
+                            ),
                           ),
-                          Text(
-                            "Username: caxerx",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.grey),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    res.data["patient"]["name"],
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Username: ${res.data["patient"]["username"]}",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: Colors.grey),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Icon(Icons.keyboard_arrow_right),
                           )
                         ],
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Icon(Icons.keyboard_arrow_right),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        Divider(
-          height: 1,
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.check_box,
-            size: 40,
-          ),
-          title: Text("Appointment"),
-          subtitle: Text("View and manage the reserved services"),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AppointmentList()));
-          },
-        ),
-        Divider(
-          height: 1,
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.assignment,
-            size: 40,
-          ),
-          title: Text("Medical Records"),
-          subtitle: Text("View the medical records"),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MedicalRecordListPage()));
-          },
-        ),
-        Divider(
-          height: 1,
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.feedback,
-            size: 40,
-          ),
-          title: Text("Feedback"),
-          subtitle: Text("Share opinions to the development team."),
-        ),
-      ],
+                ),
+                Divider(
+                  height: 1,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.check_box,
+                    size: 40,
+                  ),
+                  title: Text("Appointment"),
+                  subtitle: Text("View and manage the reserved services"),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AppointmentList()));
+                  },
+                ),
+                Divider(
+                  height: 1,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.assignment,
+                    size: 40,
+                  ),
+                  title: Text("Medical Records"),
+                  subtitle: Text("View the medical records"),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MedicalRecordListPage()));
+                  },
+                ),
+                Divider(
+                  height: 1,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.exit_to_app,
+                    size: 40,
+                  ),
+                  title: Text("Logout"),
+                  subtitle: Text("Logout from the device"),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Logout"),
+                            content: Text("Are you sure to logout DocSearch"),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("No"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              FlatButton(
+                                child: Text("Yes"),
+                                onPressed: () {
+                                  setState(() {
+                                    model.loggedInUserId = "-1";
+                                    _page = 0;
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ],
+            );
+          }),
+        );
+      },
     );
   }
 }

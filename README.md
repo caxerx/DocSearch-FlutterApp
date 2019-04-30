@@ -1,4 +1,4 @@
-# docsearch
+# doc_search
 
 DocSearch
 
