@@ -43,6 +43,7 @@ dependencies:
   url_launcher: ^5.0.2
   http: ^0.12.0+2
   flutter_rating: ^0.0.2
+  flutter_launcher_icons: ^0.7.0
 
 
 dev_dependencies:
@@ -103,3 +104,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+
+flutter_icons:
+  image_path: "assets/docsearch_logo.png"
+  android: true
+  ios: true
